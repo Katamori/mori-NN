@@ -2,7 +2,7 @@
 <html>
 <head>
 
-<title>mori-NN pre-pre-alpha</title>
+<title>canvas attempt</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
 #drawboard {
@@ -21,9 +21,9 @@
 <body>
     <h1>mori-NN pre-alpha</h1>
 
-    <div id="drawboard">
+    <canvas id="drawboard">
 
-    </div>
+    </canvas>
 
     <div id="stats">
         <p id="err">err</p>
@@ -40,9 +40,8 @@
 <script src="./synaptic-utils.js"></script>
 
 <!-- mori-NN code -->
-<!-- 
 <script src="./mori-nn-canvas.js"></script>
--->
+
 <!-- desired training set -->
 <script src="./training-sets/xor-manual.js"></script>
 
@@ -56,10 +55,26 @@ var status = document.getElementById("val");
 var threshold = 0.0000000001
 
 //initialization
-var myPerceptron = new Perceptron(2,3,1);
+var myPerceptron = new Perceptron(2,6,1);
 var myTrainer = new Trainer(myPerceptron);
 
-//draw model; WIP
+//draw model
+function drawLayer(l, j){
+    i=1;
+    l.list.forEach(function(n){
+
+
+        drawNeuron(i*40, j) 
+        i++;
+
+
+    })
+
+}
+
+drawLayer(myPerceptron.layers.input, 40);
+drawLayer(myPerceptron.layers.hidden[0], 70);
+drawLayer(myPerceptron.layers.output, 100);
 
 //train: endless repeat until threshold reached
 setInterval(function(){
