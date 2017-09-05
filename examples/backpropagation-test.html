@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+</head>
+<body>
+    <h1>Manual perceptron + backprop model</h1>
+    <br>
+    <p id="err">err</p>
+    <p id="val">val</p>
+</body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/synaptic/1.1.1/synaptic.js"></script>
+<script>
+
+var Neuron = synaptic.Neuron,
+	Layer = synaptic.Layer,
+	Network = synaptic.Network,
+	Trainer = synaptic.Trainer,
+	Architect = synaptic.Architect;
+
+var threshold = 0.0000000001
+
+function Perceptron(input, hidden, output)
+{
+	// create the layers
+	var inputLayer = new Layer(input);
+	var hiddenLayer = new Layer(hidden);
+	var outputLayer = new Layer(output);
+
+	// connect the layers
+	inputLayer.project(hiddenLayer);
+	hiddenLayer.project(outputLayer);
+
+	// set the layers
+	this.set({
+		input: inputLayer,
+		hidden: [hiddenLayer],
+		output: outputLayer
+	});
+}
+
+// extend the prototype chain
+Perceptron.prototype = new Network();
+Perceptron.prototype.constructor = Perceptron;
+
+var myPerceptron = new Perceptron(2,3,1);
+var myTrainer = new Trainer(myPerceptron);
+
+var trainingSet = [
+  {
+    input: [0,0],
+    output: [0]
+  },
+  {
+    input: [0,1],
+    output: [1]
+  },
+  {
+    input: [1,0],
+    output: [1]
+  },
+  {
+    input: [1,1],
+    output: [0]
+  },
+]
+
+
+function printAll(){
+    var r = "Training set, expectations and output: <br>"
+    trainingSet.forEach(function(data){
+        r = r.concat(data.input+" -> "+data.output+" | "+myPerceptron.activate(data.input)[0]+"<br>")
+    });
+    return r;
+}
+
+//train
+setInterval(function(){
+
+    if(myTrainer.train(trainingSet).error > threshold){
+        document.getElementById("err").innerHTML = "error: "+myTrainer.train(trainingSet).error+"<br>"
+        document.getElementById("val").innerHTML = printAll();
+    }else{
+        document.getElementById("err").innerHTML = "ended at "+myTrainer.train(trainingSet).error+"<br>"
+        document.getElementById("val").innerHTML = printAll();
+    }
+
+}, 5)
+
+
+
+
+</script>
+</html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+</head>
+<body>
+
+    <h1>mori-NN pre-alpha</h1>
+
+    <br>
+    <canvas id="drawboard">
+
+    </canvas>
+    <div id="stats">
+        <p id="err">err</p>
+        <p id="val">val</p>
+    </div>
+
+
+</body>
+<!-- the heart, mind and soul of it all: SynapticJS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/synaptic/1.1.1/synaptic.js"></script>
+
+<script src="./synaptic-init.js"></script>
+<script src="./synaptic-perceptron.js"></script>
+<script src="./synaptic-utils.js"></script>
+
+<script src="./training-sets/xor-manual.js"></script>
+
+<script>
+
+//local utilities
+var errtxt = document.getElementById("err");
+var status = document.getElementById("val");
+
+//settings
+var threshold = 0.0000000001
+
+//initialization
+var myPerceptron = new Perceptron(2,3,1);
+var myTrainer = new Trainer(myPerceptron);
+
+
+//train: endless repeat until threshold reached
+setInterval(function(){
+
+    if(myTrainer.train(trainingSet).error > threshold){
+        errtxt.innerHTML = "error: "+myTrainer.train(trainingSet).error+"<br>";
+    }else{
+        errtxt.innerHTML = "ended at "+myTrainer.train(trainingSet).error+"<br>";
+    }
+    
+    document.getElementById("val").innerHTML = utils_printStatus(myPerceptron);
+
+}, 5)
+
+
+
+
+</script>
+</html>
