@@ -1,4 +1,9 @@
-var deletor = {};
+var deletor;
+
+var neuralModel;
+var neuralTrainer;
+
+
 document.getElementById("halt").disabled = true;
 
 function execute(params){
@@ -12,16 +17,25 @@ function execute(params){
 
     //settings
     var threshold = params.threshold
-    var neuralModel = [];
 
     //initialization
     switch(params.model){
+
         case "perceptronCustom":
-            neuralModel = new Perceptron(2,3,1);
+            neuralModel = 
+                new Perceptron(
+                    params.modelInput[0],
+                    params.modelInput[1],
+                    params.modelInput[2]
+                );
             break;
+            
+        case "hopfieldOfficial":
+            neuralModel = new Architect.Hopfield(params.modelInput)
     }
     
-    var myTrainer = new Trainer(neuralModel);
+    neuralTrainer = new Trainer(neuralModel);
+    console.log(neuralModel)
 
     //draw model
     RaphaelInit(r, neuralModel)
@@ -32,10 +46,10 @@ function execute(params){
         
         return window.setInterval(function(){
 
-            if(myTrainer.train(trainingSet).error > threshold){
-                errtxt.innerHTML = "error: "+myTrainer.train(trainingSet).error+"<br>";
+            if(neuralTrainer.train(trainingSet).error > threshold){
+                errtxt.innerHTML = "error: "+neuralTrainer.train(trainingSet).error+"<br>";
             }else{
-                errtxt.innerHTML = "ended at "+myTrainer.train(trainingSet).error+"<br>";
+                errtxt.innerHTML = "ended at "+neuralTrainer.train(trainingSet).error+"<br>";
             }
 
             document.getElementById("val").innerHTML = utils_printStatus(neuralModel);

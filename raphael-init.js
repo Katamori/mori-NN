@@ -5,11 +5,10 @@
     --- Katamori
 */
 
-function RaphaelAddNeuron(context, x, y, radius, sourceneuron){
+function RaphaelAddNeuron(context, x, y, radius, sourceneuron, color){
 
     var shape = context.ellipse(x, y, radius, radius)
 
-    var color = "#cf9";
     shape.attr({fill: color, stroke: color, "fill-opacity": 0, "stroke-width": 2, cursor: "move"});
     shape.drag(RaphaelTools.move, RaphaelTools.dragger, RaphaelTools.up);
 
@@ -20,6 +19,8 @@ function RaphaelAddNeuron(context, x, y, radius, sourceneuron){
 
 function RaphaelInit(context, model){
 
+    context.clear()
+
     var connections = RaphaelTools.connections;
     var shapes = RaphaelTools.shapes;
 
@@ -28,18 +29,19 @@ function RaphaelInit(context, model){
     for(var l in model.layers){
 
         var layer = model.layers[l]
-
+        
         if(typeof layer.length !== "undefined" && model.layers[l].length > 0){
 
             for(m=1;m<layer.length+1;m++){
                 for(n=1;n<layer[m-1].list.length+1;n++){
-                    RaphaelAddNeuron(context, n*100, y*100, 20, layer[m-1].list[n-1])
+                    RaphaelAddNeuron(context, n*100, y*100, 20, layer[m-1].list[n-1], "#000")
                 }
             }
 
-        }else{
+        }else if(typeof layer.list !== "undefined"){
             for(n=1;n<layer.list.length+1;n++){
-                RaphaelAddNeuron(context, n*100, y*100, 20, layer.list[n-1])
+
+                RaphaelAddNeuron(context, n*100, y*100, 20, layer.list[n-1], l=="input" ? "#21ff42" : "#e20")
             }
         }
         y++;
@@ -54,14 +56,34 @@ function RaphaelInit(context, model){
         if(typeof layer.length !== "undefined" && model.layers[l].length > 0){
 
             for(m=0;m<layer.length;m++){
-                for(n=0;n<layer[m].list.length;n++){
-                    //layer[m].list[n]
+                for(c=0;c<layer[m].connectedTo.length;c++){
+                    for(var cc in layer[m].connectedTo[c].connections){
+                        
+                        var ccc = layer[m].connectedTo[c].connections[cc]
+                        connections.push(
+                            context.connection(
+                                RaphaelTools.shapes.find((e)=>e.id===RaphaelTools.model_lookup[ccc.from.ID]),
+                                RaphaelTools.shapes.find((e)=>e.id===RaphaelTools.model_lookup[ccc.to.ID]),
+                                "#fff", "#fff|5"
+                            )
+                        )
+                    }
                 }
             }
 
-        }else{
-            for(n=0;n<layer.list.length1;n++){
-                //layer.list[n]
+        }else if(typeof layer.connectedTo !== "undefined"){
+            for(c=0;c<layer.connectedTo.length;c++){
+                for(var cc in layer.connectedTo[c].connections){
+                    
+                    var ccc = layer.connectedTo[c].connections[cc]
+                    connections.push(
+                        context.connection(
+                            RaphaelTools.shapes.find((e)=>e.id===RaphaelTools.model_lookup[ccc.from.ID]),
+                            RaphaelTools.shapes.find((e)=>e.id===RaphaelTools.model_lookup[ccc.to.ID]),
+                            "#fff", "#fff|5"
+                        )
+                    )
+                }
             }
         }
         y++;
