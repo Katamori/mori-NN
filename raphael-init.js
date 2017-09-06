@@ -41,7 +41,7 @@ function RaphaelInit(context, model){
         }else if(typeof layer.list !== "undefined"){
             for(n=1;n<layer.list.length+1;n++){
 
-                RaphaelAddNeuron(context, n*100, y*100, 20, layer.list[n-1], l=="input" ? "#21ff42" : "#e20")
+                RaphaelAddNeuron(context, n*100, y*100, 20, layer.list[n-1], l=="input" ? "#21ff42" : "#2172ff")
             }
         }
         y++;
@@ -64,7 +64,7 @@ function RaphaelInit(context, model){
                             context.connection(
                                 RaphaelTools.shapes.find((e)=>e.id===RaphaelTools.model_lookup[ccc.from.ID]),
                                 RaphaelTools.shapes.find((e)=>e.id===RaphaelTools.model_lookup[ccc.to.ID]),
-                                "#fff", "#fff|5"
+                                "#fff", "#fff|3"
                             )
                         )
                     }
@@ -80,18 +80,14 @@ function RaphaelInit(context, model){
                         context.connection(
                             RaphaelTools.shapes.find((e)=>e.id===RaphaelTools.model_lookup[ccc.from.ID]),
                             RaphaelTools.shapes.find((e)=>e.id===RaphaelTools.model_lookup[ccc.to.ID]),
-                            "#fff", "#fff|5"
+                            "#fff", "#fff|3"
                         )
                     )
                 }
             }
         }
         y++;
-
     }
-
-
-    //connections.push(context.connection(shapes[1], shapes[2], "#fff", "#fff|5"));
 
 }
 

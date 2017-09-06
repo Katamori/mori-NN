@@ -1,7 +1,19 @@
 # MoriNN
 Neural network creation tool in browser, built on [SynapticJS by Cazala](http://caza.la/synaptic/#/) and [RaphaelJS by Dmitry Baranovskiy](https://dmitrybaranovskiy.github.io/raphael/), with simplicity in mind.
 
-# To-do list of features
+Currently in very early phase.
+
+# Features
+
+* Load pre-existing models from SynapticJS [WIP]
+
+# To-do list
+
+* Display neuron and connection informations.
+
+    * Adjust connection color to strength.
+
+    * Maybe a connection matrix?
 
 * Export model to JSON
 
@@ -14,5 +26,3 @@ Neural network creation tool in browser, built on [SynapticJS by Cazala](http://
 * Add/remove neurons manually
 
 * Add/remove connections manually
-
-* Load pre-existing models from SynapticJS

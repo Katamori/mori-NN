@@ -5,3 +5,18 @@ function utils_printStatus(modelname){
     });
     return resu;
 }
+
+function utils_teachPerceptron(){ 
+    
+    return window.setInterval(function(){
+
+        if(neuralTrainer.train(trainingSet).error > threshold){
+            errtxt.innerHTML = "error: "+neuralTrainer.train(trainingSet).error+"<br>";
+        }else{
+            errtxt.innerHTML = "ended at "+neuralTrainer.train(trainingSet).error+"<br>";
+        }
+
+        document.getElementById("val").innerHTML = utils_printStatus(neuralModel);
+
+    }, 5)
+}

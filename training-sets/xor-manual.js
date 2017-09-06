@@ -1,4 +1,4 @@
-var trainingSet = [
+var XORcases = [
   {
     input: [0,0],
     output: [0]

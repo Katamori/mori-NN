@@ -1,10 +1,21 @@
+var errtxt;
+var status;
+
 var deletor;
 
 var neuralModel;
 var neuralTrainer;
+var trainingSet;
+
+var threshold;
+
 
 
 document.getElementById("halt").disabled = true;
+
+
+
+
 
 function execute(params){
 
@@ -12,11 +23,11 @@ function execute(params){
     document.getElementById("start").disabled = true;
     document.getElementById("halt").disabled = false;
 
-    var errtxt = document.getElementById("err");
-    var status = document.getElementById("val");
+    errtxt = document.getElementById("err");
+    status = document.getElementById("val");
 
     //settings
-    var threshold = params.threshold
+    threshold = params.threshold
 
     //initialization
     switch(params.model){
@@ -28,36 +39,53 @@ function execute(params){
                     params.modelInput[1],
                     params.modelInput[2]
                 );
+
+            neuralTrainer = new Trainer(neuralModel);
+
+            trainingSet = XORcases;
+
+            //train: endless repeat until threshold reached
+            deletor = utils_teachPerceptron()
+
+
             break;
-            
+
+        case "perceptronOfficial":
+            neuralModel = 
+                new Architect.Perceptron(
+                    params.modelInput[0],
+                    params.modelInput[1],
+                    params.modelInput[2]
+                );
+
+            neuralTrainer = new Trainer(neuralModel);
+
+            trainingSet = XORcases;
+
+            //train: endless repeat until threshold reached
+            deletor = utils_teachPerceptron()
+
+
+            break;
+
         case "hopfieldOfficial":
             neuralModel = new Architect.Hopfield(params.modelInput)
+            break;
+
+        case "liquidOfficial":
+            neuralModel = 
+                new Architect.Liquid(
+                    params.modelInput.input, 
+                    params.modelInput.pool, 
+                    params.modelInput.output, 
+                    params.modelInput.connections, 
+                    params.modelInput.gates
+                )
+            break;       
     }
-    
-    neuralTrainer = new Trainer(neuralModel);
-    console.log(neuralModel)
 
     //draw model
     RaphaelInit(r, neuralModel)
-
-
-    //train: endless repeat until threshold reached
-    var teachFc = function(){ 
-        
-        return window.setInterval(function(){
-
-            if(neuralTrainer.train(trainingSet).error > threshold){
-                errtxt.innerHTML = "error: "+neuralTrainer.train(trainingSet).error+"<br>";
-            }else{
-                errtxt.innerHTML = "ended at "+neuralTrainer.train(trainingSet).error+"<br>";
-            }
-
-            document.getElementById("val").innerHTML = utils_printStatus(neuralModel);
-
-        }, 5)
-    }
-
-    deletor = teachFc()
 
 }
 
@@ -74,3 +102,4 @@ function deleteModel(){
     document.getElementById("err").innerHTML = "";
     document.getElementById("val").innerHTML = "";
 }
+

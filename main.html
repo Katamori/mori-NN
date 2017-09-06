@@ -20,17 +20,17 @@
 <body>
     <h1>mori-NN pre-alpha</h1>
 
+    <div id="ui">
+        <select id="settinglist">
+            <option value="default">Custom perceptron, 2-3-1 shape, XOR learning</option>
+            <option value="perceptron_XOR">Built-in perceptron, 2-3-1 shape, XOR learning</option>
+            <option value="hopfield_XOR">Built-in Hopfield network, for 2 bits, doesn't work yet</option>
+            <option value="liquid_XOR">Built-in Liquid State Machine, 2-5-1-10-10, doesn't work yet</option>
+        </select>
+        <button id="start" onClick="execute(settings[document.getElementById('settinglist').value])">Start</button>
+        <button id="halt" onClick="halt()">Stop</button>
+    </div>
 
-    <select id="settinglist">
-        <option value="default">Custom perceptron, 2-3-1 shape, XOR learning</option>
-        <option value="hopfield_XOR">Built-in Hopfield network, for 2 bits, doesn't work yet</option>
-    <!-- 
-        <option value="perceptron2">Architect.Perceptron, 2-3-1 shape, XOR learning</option>
-        <option value="comingsoon">Other coming soon</option>
-    -->
-    </select>
-    <button id="start" onClick="execute(settings[document.getElementById('settinglist').value])">Start</button>
-    <button id="halt" onClick="halt()">Stop</button>
     <br>
     <div id="drawboard">
         
