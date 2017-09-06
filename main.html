@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-
 <title>mori-NN pre-pre-alpha</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
@@ -22,7 +21,6 @@
     <h1>mori-NN pre-alpha</h1>
 
     <div id="drawboard">
-
     </div>
 
     <div id="stats">
@@ -30,6 +28,12 @@
         <p id="val">val</p>
     </div>
 </body>
+
+<!-- drawing & stuff -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.2.7/raphael.min.js"></script>
+
+<script src="./raphael-connection.js"></script>
+<script src="./raphael-init.js"></script>
 
 <!-- the heart, mind and soul of it all: SynapticJS -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/synaptic/1.1.1/synaptic.js"></script>
@@ -40,7 +44,7 @@
 <script src="./synaptic-utils.js"></script>
 
 <!-- mori-NN code -->
-<!-- 
+<!--
 <script src="./mori-nn-canvas.js"></script>
 -->
 <!-- desired training set -->
@@ -59,7 +63,9 @@ var threshold = 0.0000000001
 var myPerceptron = new Perceptron(2,3,1);
 var myTrainer = new Trainer(myPerceptron);
 
-//draw model; WIP
+//draw model
+RaphaelInit(r, myPerceptron)
+
 
 //train: endless repeat until threshold reached
 setInterval(function(){
@@ -69,7 +75,7 @@ setInterval(function(){
     }else{
         errtxt.innerHTML = "ended at "+myTrainer.train(trainingSet).error+"<br>";
     }
-    
+
     document.getElementById("val").innerHTML = utils_printStatus(myPerceptron);
 
 }, 5)

@@ -1,5 +1,5 @@
 # MoriNN
-Neural network creation tool in browser, built on [SynapticJS by Cazala](http://caza.la/synaptic/#/), with simplicity in mind.
+Neural network creation tool in browser, built on [SynapticJS by Cazala](http://caza.la/synaptic/#/) and [RaphaelJS by Dmitry Baranovskiy](https://dmitrybaranovskiy.github.io/raphael/), with simplicity in mind.
 
 # To-do list of features
 
